@@ -1,3 +1,9 @@
+# Script to process books3 dataset and replace assistant 
+# content with the processed book
+# Usage: python b3.py
+# Note: Make sure to set the DATA_DIR variable to the path of the books3 dataset
+# This script should take 30 minutes to run.
+
 import os
 import concurrent.futures
 import regex as re
@@ -9,7 +15,9 @@ sys.path.append("../")
 from utils import *
 import numpy as np
 import pandas as pd
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
+
+DATA_DIR = "/data/books3/the-eye.eu/public/Books/Bibliotik/"
 
 
 def process_book(book_path):
@@ -64,21 +72,18 @@ def process_book(book_path):
         for p in paragraphs:
             result.append(p)
             word_count += len(p.split())
-            if word_count >= 5024:
+            if word_count > 5024:
                 break
         result_text = "\n".join(result)
 
         # Make sure that the book ends with a full sentence
+        result_text = truncating_words(result_text, 5024)
         result_text = strip_trailing_text(result_text)
-
-        # Safely skip this book if it has more than 3 occurrence of "ibid"
-        if check_bib(result_text):
-            return
 
         return result_text
 
     except Exception as e:
-        message = f"Error processing {book_path.split('/')[-2:]}: {e}\n{traceback.format_exc()}"
+        print(f"Error processing {book_path.split('/')[-2:]}: {e}\n{traceback.format_exc()}. Make sure that your data directory path is stored in the DATA_DIR variable.")
 
 
 def retrieve_book(dataset):
@@ -86,23 +91,32 @@ def retrieve_book(dataset):
     Retrieve book for rows with type 'b3'
     Replace assistant content in 'messages' and 'answer' columns with the processed book
     """
+    dataset = dataset.to_pandas()
     for i in tqdm(range(len(dataset))):
-        if dataset["type"][i] == "b3":
-            book_path = dataset["id"][i]
-            processed_book = process_book(book_path)
-            for col in ["messages", "answer"]:
-                for item in dataset[col][i]:
-                    if item["role"] == "assistant":
-                        item["content"] = processed_book
-
+        if dataset["type"].tolist()[i] == "b3":
+            book_path = os.path.join(DATA_DIR, dataset["id"].tolist()[i])
+            book = process_book(book_path)
+            # Replace only the assistant content
+            if book: 
+                for j in range(len(dataset["messages"].tolist()[i])):
+                    if dataset["messages"].tolist()[i][j]["role"] == "assistant":
+                        dataset["messages"].tolist()[i][j]["content"] = book
+                dataset.at[i, "answer"] = [{"role": "assistant", "content": book}]
+    # Convert back to dataset format
+    dataset = Dataset.from_pandas(dataset)
     return dataset
 
 
 if __name__ == "__main__":
     # Load the dataset
-    dataset = load_dataset("chtmp223/suri", cache_dir=os.environ["HF_HOME"])
+    dataset = load_dataset("chtmp223/suri", 
+                           cache_dir=os.environ["HF_HOME"], 
+                           token=os.environ["HF_TOKEN"])
     for split in dataset.keys():
         dataset[split] = retrieve_book(dataset[split])
 
-    # Save the dataset
-    dataset.save_to_disk("data/suri")
+    # Save the dataset to csv files
+    dataset['train'].to_pandas().to_csv("train.csv", index=False)
+    dataset['dev'].to_pandas().to_csv("dev.csv", index=False)
+    dataset['test'].to_pandas().to_csv("test.csv", index=False)
+    
