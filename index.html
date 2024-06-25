@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-site-verification" content="tCsJJWn2zQXxNRhhVU8Poh4NOXvc7wxoOyZmEUCI0pk" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <script>
+      function unhide(divID) {
+        var item = document.getElementById(divID);
+        if (item) {
+          item.className = (item.className == 'hidden') ? 'unhidden' : 'hidden';
+        }
+      }
+      function applySystemDefaultMode() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add("nord-dark-mode");
+          }
+        }
+
+        window.onload = applySystemDefaultMode;
+    </script>
+    <title>Chau Minh Pham</title>
+    <style>
+      .nord-dark-mode {
+        background-color: #2E3440;
+        color: #D8DEE9;
+      }
+      .nord-dark-mode a {
+        color: #88C0D0;
+      }
+      .nord-dark-mode a:hover {
+        padding: 0 0 5px; 
+        background-color: #fff48f;
+        color: #00818a;
+      }
+      .nord-dark-mode hr {
+        border-color: #4C566A;
+      }
+      .nord-dark-mode .container {
+        border-color: #4C566A;
+      }
+      .nord-dark-mode p {
+        color: #D8DEE9; 
+      }
+      .nord-dark-mode b {
+        color: #D8DEE9; 
+      }
+      .nord-dark-mode h1 {
+        color: #D8DEE9; 
+      }
+      .title {
+        color: black;
+      }
+      .dark-mode-toggle {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 15px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+            background-color: #00818a;
+            border: 2px solid #D8DEE9;
+            border-radius: 50%; /* Make the button round */
+            width: 45px; /* Adjust width to make the button round */
+            height: 45px; /* Adjust height to make the button round */
+        }
+        .nord-dark-mode .bibtex {
+          color: #D8DEE9;
+        }
+    </style>
+  </head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0ZY4Q1942"></script>
+  <script>
+    // Google tag
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-V0ZY4Q1942');
+  </script>
+
+<body>
+  <div style="text-align: center;">
+    <h1>🦙 Suri: Multi-constraint Instruction Following for Long-form Text Generation</h1>
+    <img src="assets/img/dark-mode.png" alt="Toggle Dark Mode" class="dark-mode-toggle responsive-icon" id="darkModeToggle">
+
+    <script>
+        const toggleButton = document.getElementById('darkModeToggle');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('nord-dark-mode');
+        });
+    </script>
+    <a class='link-body' href="https://chtmp223.github.io/" onclick="_blank">Chau Minh Pham</a><sup>1</sup>, <a class='link-body' href="https://simengsun.github.io" onclick="_blank">Simeng Sun</a><sup>2</sup>, <a class='link-body' href="https://people.cs.umass.edu/~miyyer/" onclick="_blank">Mohit Iyyer</a><sup>1</sup>
+    <br>
+    <sup>1</sup>University of Massachusetts Amherst, <sup>2</sup>NVIDIA<br><br>
+    <a class="link-body" href="">[Paper]</a>
+    <a class="link-body" href="https://www.github.com/chtmp223/suri" target="_blank">[Code]</a>
+    <a class="link-body" href="" target="_blank">[Dataset]</a>
+    <a class="link-body" href="" target="_blank">[I-ORPO Model]</a>
+    <a class="link-body" href="" target="_blank">[SFT Model]</a>
+  </div>
+  
+  <hr>
+
+  <div style="text-align: center;">
+    <img class="responsive-header" style="padding-top:10px; height: auto; " src="assets/img/suri.png">
+  </div>
+
+  <br>
+  <div class="container" style="text-align: center;">
+    <h2 class="title">Abstract</h2><br>
+    <div class="row abstract">
+      <p style="text-align: justify;">
+        Existing research on instruction following largely focuses on tasks with simple instructions and short responses. In this work, we explore multi-constraint instruction following for generating long-form text. We create <span class="texttt">Suri</span>, a dataset with 20K human-written long-form texts paired with LLM-generated backtranslated instructions that contain multiple complex constraints. Because of prohibitive challenges associated with collecting human preference judgments on long-form texts, preference-tuning algorithms such as DPO are infeasible in our setting; thus, we propose Instructional ORPO (I-ORPO), an alignment method based on the ORPO algorithm. Instead of receiving negative feedback from dispreferred <strong>responses</strong>, I-ORPO obtains negative feedback from synthetically corrupted <em>instructions</em> generated by an LLM. Using <span class="texttt">Suri</span>, we perform supervised and I-ORPO fine-tuning on Mistral-7b-Instruct-v0.2. The resulting models, <span class="texttt">Suri</span>-SFT and <span class="texttt">Suri</span>-I-ORPO, generate significantly longer texts (approximately 5K tokens) than base models without significant quality deterioration. Our human evaluation shows that while both SFT and I-ORPO models satisfy most constraints, <span class="texttt">Suri</span>-I-ORPO generations are generally preferred for their coherent and informative incorporation of the constraints.
+      </p>
+    </div>
+  </div>
+
+  <hr>
+  <div class="container" style="text-align: center;">
+    <h2 class="title"><span class="texttt">Suri</span> Dataset</h2><br>
+    <div class="row">
+
+    </div>
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+</html>

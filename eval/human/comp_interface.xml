@@ -1,0 +1,72 @@
+<View>
+  <!-- First Row spanning the entire width -->
+  <View style="display: flex; flex-direction: column;">
+  <Header value="Constraint" size="2"/>
+  <Text name="constraint" value="$annotation_cons"/>
+  <View style="display: flex; flex-direction: row; column-gap: 5em;">  <!-- Added column-gap for spacing -->
+    <Labels name="answer1" toName="text1" showInline="true">
+      <Label value="Highlight Text 1" background="#00c7fc"/>
+    </Labels>
+    <Labels name="answer2" toName="text2" showInline="true">
+      <Label value="Highlight Text 2" background="#c3d117"/>
+    </Labels>
+  </View>
+</View>
+  
+  <!-- Second Row with two components side by side -->
+  <View style="display: flex; flex-direction: row; height: 65vh;"> 
+    <!-- First Component occupying 50% of the width -->
+    <View style="flex: 1; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding: 10px; border-right: 1px solid #ccc;">
+        <Header value="Text 1" size="2"/>
+        <Text name="text1" value="$text1" granularity="word"/>
+    </View>
+    
+    <!-- Second Component also occupying 50% of the width -->
+    <View style="flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding: 10px;">
+        <Header value="Text 2" size="2"/>
+        <Text name="text2" value="$text2" granularity="word"/>
+    </View>
+  </View>
+
+  
+  <!-- Third Row beneath the second, spanning the entire width -->
+  <View style="display: flex; flex-direction: column; ">
+    <Header value="Does text 1 satisfy the given constraint?"/>
+    <Choices name="cons1" toName="text1" required="true" layout="inline">
+    	<Choice value="Yes"/><Choice value="No"/>
+    </Choices>
+    
+    <Header value="Does text 2 satisfy the given constraint?"/>
+    <Choices name="cons2" toName="text2" required="true" layout="inline">
+    	<Choice value="Yes"/><Choice value="No"/>
+    </Choices>
+    
+    <Header value="Informativeness"/>
+    <Text name="caution" value="Which text offers more details about the given constraint?" granularity="word"/>
+    <Choices name="informative" toName="text2" required="true" layout="inline">
+    	<Choice value="Text 1"/><Choice value="Text 2"/>
+    </Choices>
+    
+    <Header value="Coherence"/>
+    <Text name="caution2" value="Which text incorporates the constraint in a coherent manner? Choose the text that better integrates the constraint with other parts of the text, ensuring a smooth and logical flow." granularity="word"/>
+    <Choices name="coherence" toName="text2" required="true" layout="inline">
+    	<Choice value="Text 1"/><Choice value="Text 2"/>
+    </Choices>
+    
+    <Header value="Enjoyability"/>
+    <Text name="caution3" value="Choose the text that you enjoy reading overall." granularity="word"/>
+    <Choices name="enjoy" toName="text2" required="true" layout="inline">
+    	<Choice value="Text 1"/><Choice value="Text 2"/>
+    </Choices>
+    
+    <Header value="Overall Assessment"/>
+    <Text name="caution4" value="Which text better satisfies the constraint?" granularity="word"/>
+    <Choices name="overall" toName="text2" required="true" layout="inline">
+    	<Choice value="Text 1"/><Choice value="Text 2"/>
+    </Choices>
+    
+    
+    <Header value="Please comment on your choices"/>
+    <TextArea name="comments" toName="text1" required="true" editable="true" placeholder="Type your comments here and hit Enter to submit."/>
+  </View>
+</View>

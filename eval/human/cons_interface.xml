@@ -1,0 +1,32 @@
+<View>
+  <!-- First Row with two components side by side -->
+  <View style="display: flex; flex-direction: row; height: 65vh;"> <!-- Adjust overall height as needed -->
+    <!-- First Component occupying 50% of the width -->
+    <View style="flex: 35%; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding: 10px; border-right: 1px solid #ccc;">
+      <Header value="Constraint" size="2"/>
+      <Text name="constraint" value="$annotation_cons"/>
+      <Labels name="answer" toName="text" showInline="true">
+      <Label value="Click to highlight constraint" background="#9aa60e"/>
+        
+      </Labels>
+    </View>
+    <!-- Second Component also occupying 50% of the width -->
+    <View style="flex: 65%; display: flex; flex-direction: column; overflow-y: auto; padding: 10px; ">
+      <Header value="Response" size="2"/>
+      <Header value="Highlight the text spans that support the constraint." size="10"/>
+      <Text name="text" value="$annotation_inference" granularity="word"/>
+    </View>
+  </View>
+  
+  <!-- Second Row beneath the first, spanning the entire width -->
+  <View style="display: flex; flex-direction: column; ">
+    <Header value="Does the text satisfy the given constraint?"/>
+    <Text name="caution" value="Make your decision based solely on the content. If the text meets the constraint but is inconsistent, still choose 'yes'. Please leave a comment noting any inconsistencies." granularity="word"/>
+    <Choices name="choices_constraint" toName="text" required="true" layout="inline">
+    	<Choice value="Yes"/><Choice value="No"/><Choice value="Partially"/>
+    </Choices>
+
+    <Header value="Comments (optional)"/>
+    <TextArea name="comments" toName="text" editable="true" placeholder="Type your comments here and hit Enter to submit."/>
+  </View>
+</View>
