@@ -59,3 +59,28 @@ def truncating_words(document, max_tokens):
         truncated_document.append("\n")
 
     return " ".join(truncated_document).strip()
+
+def check_len(text): 
+    '''
+    Check word count of the text
+    '''
+    return len(text.split())
+
+def check_length(text): 
+    '''
+    Check text length based on tiktoken embedding
+    '''
+    enc = tiktoken.get_encoding("o200k_base")
+    return len(enc.encode(text))
+
+
+def check_repetition_position(text, start, end, ngram):
+    '''
+    Check ngram repetition within a text range (determined by words)
+    ''' 
+    # Get range by word, not token 
+    if len(text) > start: 
+        chunked = " ".join(text.split()[start:end])
+        return detect_ngram_repetition(chunked, ngram)[1]
+    else: 
+        return 0 

@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 from datasets import load_dataset, Dataset
 
-DATA_DIR = "/data/books3/the-eye.eu/public/Books/Bibliotik/"
+DATA_DIR = ""               #TODO: Insert your books3 path here
 
 
 def process_book(book_path):
@@ -76,7 +76,7 @@ def process_book(book_path):
                 break
         result_text = "\n".join(result)
 
-        # Make sure that the book ends with a full sentence
+        # Make sure that the book ends with a full sentence if possible
         result_text = truncating_words(result_text, 5024)
         result_text = strip_trailing_text(result_text)
 
@@ -102,7 +102,6 @@ def retrieve_book(dataset):
                     if dataset["messages"].tolist()[i][j]["role"] == "assistant":
                         dataset["messages"].tolist()[i][j]["content"] = book
                 dataset.at[i, "answer"] = [{"role": "assistant", "content": book}]
-    # Convert back to dataset format
     dataset = Dataset.from_pandas(dataset)
     return dataset
 
@@ -120,3 +119,5 @@ if __name__ == "__main__":
     dataset['dev'].to_pandas().to_csv("dev.csv", index=False)
     dataset['test'].to_pandas().to_csv("test.csv", index=False)
     
+    # Save the dataset to huggingface hub 
+    #dataset.push_to_hub("...")

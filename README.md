@@ -1,6 +1,6 @@
 # 🦙 Suri: Multi-constraint Instruction Following for Long-form Text Generation
 
-[![arXiV](https://img.shields.io/badge/arxiv-soon-red)]() [![Website](https://img.shields.io/badge/arxiv-soon-purple)](https://chtmp223.github.io/suri) [![Dataset](https://img.shields.io/badge/dataset-huggingface-yellow)](https://huggingface.co/chtmp223/suri) [![Suri-I-ORPO](https://img.shields.io/badge/iorpo-model-green)](https://huggingface.co/chtmp223/suri-i-orpo) [![Suri-SFT](https://img.shields.io/badge/sft-model-blue)](https://huggingface.co/chtmp223/suri-sft)
+[![arXiV](https://img.shields.io/badge/arxiv-soon-red)]() [![Website](https://img.shields.io/badge/website-link-purple)](https://chtmp223.github.io/suri) [![Dataset](https://img.shields.io/badge/dataset-huggingface-yellow)](https://huggingface.co/chtmp223/suri) [![Suri-I-ORPO](https://img.shields.io/badge/iorpo-model-green)](https://huggingface.co/chtmp223/suri-i-orpo) [![Suri-SFT](https://img.shields.io/badge/sft-model-blue)](https://huggingface.co/chtmp223/suri-sft)
 
 ![TopicGPT Pipeline Overview](assets/img/suri.png)
 > This repository hosts the code and data for our preprint, [Suri: Multi-constraint instruction following for long-form text generation](arxiv). 
@@ -34,10 +34,11 @@ TODO
 
 ### I-ORPO & SFT implementation 
 - The I-ORPO model is available on Huggingface: [https://huggingface.co/chtmp223/suri-i-orpo](https://huggingface.co/chtmp223/suri-i-orpo). The SFT model is available on Huggingface: [https://huggingface.co/chtmp223/suri-sft](https://huggingface.co/chtmp223/suri-sft).
-- We include the code for training and evaluation in the `script/ft/` directory. Before getting started, ensure that the requirements are installed and the Huggingface cache directory is set up.
+- We include the code for training and evaluation in the `script/ft/` directory. Before getting started, ensure that the requirements are installed and the Huggingface cache directory is set up. See the README.md file in that folder for more information.
 
 
 ## 📜 Citation
 If you find this work useful, please consider citing:
 ```
+
 ```

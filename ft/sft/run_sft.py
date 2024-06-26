@@ -26,7 +26,8 @@ import torch
 import transformers
 from transformers import AutoModelForCausalLM, set_seed
 
-from alignment import (
+sys.path.append("../lib/")
+from alignment_mod import (
     DataArguments,
     H4ArgumentParser,
     ModelArguments,
@@ -39,7 +40,7 @@ from alignment import (
     get_quantization_config,
     get_tokenizer,
 )
-from trl import SFTTrainer, setup_chat_format
+from trl_mod import SFTTrainer, setup_chat_format
 
 
 logger = logging.getLogger(__name__)

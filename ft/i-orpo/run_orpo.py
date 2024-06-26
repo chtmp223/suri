@@ -21,12 +21,13 @@ from typing import Any, Dict
 from tqdm import trange
 
 import torch
-
 torch.cuda.empty_cache()
 import transformers
 from transformers import AutoModelForCausalLM, set_seed
 
-from alignment import (
+sys.path.append("../lib/")
+
+from alignment_mod import (
     DataArguments,
     H4ArgumentParser,
     ModelArguments,
@@ -38,8 +39,8 @@ from alignment import (
     get_quantization_config,
     get_tokenizer,
 )
-from alignment.configs import ORPOConfig
-from trl import ORPOTrainer, setup_chat_format
+from alignment_mod.configs import ORPOConfig
+from trl_mod import ORPOTrainer, setup_chat_format
 
 
 logger = logging.getLogger(__name__)
@@ -97,13 +98,9 @@ def main():
     #####################################
     # Load tokenizer and process datasets
     #####################################
-    data_args.truncation_side = (
-        "left"  # Truncate from left to ensure we don't lose labels in final turn
-    )
+    data_args.truncation_side = "left"  # Truncate from left to ensure we don't lose labels in final turn
     tokenizer = get_tokenizer(model_args, data_args)
-    tokenizer.model_max_length = (
-        training_args.max_length
-    )  # Override alignment-handbook's weird setting
+    tokenizer.model_max_length = training_args.max_length       # Override alignment-handbook's weird setting
     tokenizer.padding_token = tokenizer.unk_token
     tokenizer.padding_side = "right"
 
@@ -114,9 +111,7 @@ def main():
         try:
             torch_dtype = getattr(torch, model_args.torch_dtype)
         except AttributeError:
-            raise ValueError(
-                f'`torch_dtype` can be either `torch.dtype` or `"auto"`, but received {model_args.torch_dtype}'
-            )
+            raise ValueError(f"`torch_dtype` can be either `torch.dtype` or `\"auto\"`, but received {model_args.torch_dtype}")
 
     quantization_config = get_quantization_config(model_args)
 
@@ -143,29 +138,87 @@ def main():
         fn_kwargs={
             "tokenizer": tokenizer,
             "task": "orpo",
-            # "auto_insert_empty_system_msg": data_args.auto_insert_empty_system_msg,
+            #"auto_insert_empty_system_msg": data_args.auto_insert_empty_system_msg,
             "auto_insert_empty_system_msg": False,
         },
         num_proc=data_args.preprocessing_num_workers,
-        # remove_columns=column_names,
+        #remove_columns=column_names,
         desc="Formatting comparisons with prompt template",
     )
 
-    # Log a few random samples from the training set:
-    logger.info(
-        f"Accepted prompt 0 of the raw training set:\n\n{raw_datasets['train'][0]['prompt_chosen']}"
-    )
-    logger.info(
-        f"Rejected prompt 0 of the raw training set:\n\n{raw_datasets['train'][0]['prompt_rejected']}"
-    )
-    logger.info(
-        f"First response of the raw training set:\n\n{raw_datasets['train'][0]['answer']}"
-    )
-    assert (
-        raw_datasets["train"][0]["prompt_chosen"]
-        != raw_datasets["train"][0]["prompt_rejected"]
-    ), "Prompt and chosen are the same"
+    #############################
+    # Filter out seq > max_length
+    #############################
+    '''
+    if training_args.max_prompt_length is not None:
+        unfiltered_train_samples = len(raw_datasets["train"])
+        if "test" in raw_datasets:
+            unfiltered_test_samples = len(raw_datasets["test"])
 
+        def filter_fn(sample: Dict[str, Any]) -> Dict[str, Any]:
+            chosen_length = tokenizer(
+                sample["prompt_chosen"],
+                return_tensors="pt",
+            )[
+                "input_ids"
+            ].size(dim=-1)
+
+            rejected_length = tokenizer(
+                sample["prompt_rejected"],
+                return_tensors="pt",
+            )[
+                "input_ids"
+            ].size(dim=-1)
+
+            return chosen_length < training_args.max_prompt_length or rejected_length < training_args.max_prompt_length
+
+        raw_datasets = raw_datasets.filter(
+            filter_fn,
+            desc="Filtering out the samples where len(prompt_chosen) or len(prompt_rejected) is larger than max_prompt_length",
+        )
+
+        filtered_train_samples = unfiltered_train_samples - len(raw_datasets["train"])
+        logger.info(
+            f"Filtered out {filtered_train_samples} training samples out of the {unfiltered_train_samples} samples."
+        )
+        if "test" in raw_datasets:
+            filtered_test_samples = unfiltered_test_samples - len(raw_datasets["test"])
+            logger.info(
+                f"Filtered out {filtered_test_samples} test samples out of the {unfiltered_test_samples} samples."
+            )
+    ##########################
+    # Decontaminate benchmarks
+    ##########################
+    num_raw_train_samples = len(raw_datasets["train"])
+    raw_datasets = raw_datasets.filter(
+        decontaminate_humaneval,
+        fn_kwargs={"text_column": "text_chosen"},
+        batched=True,
+        batch_size=10_000,
+        num_proc=1,
+        desc="Decontaminating HumanEval samples",
+    )
+    num_filtered_train_samples = num_raw_train_samples - len(raw_datasets["train"])
+    logger.info(
+        f"Decontaminated {num_filtered_train_samples} ({num_filtered_train_samples/num_raw_train_samples * 100:.2f}%) samples from the training set."
+    )
+    # Replace column names with what TRL needs, text_prompt -> prompt, text_chosen -> chosen and text_rejected -> rejected
+    for split in raw_datasets.keys():
+        raw_datasets[split] = raw_datasets[split].rename_columns(
+            {
+                "text_prompt": "prompt",
+                "text_chosen": "chosen",
+                "text_rejected": "rejected",
+            }
+        )
+    '''
+
+    # Log a few random samples from the training set:
+    logger.info(f"Accepted prompt 0 of the raw training set:\n\n{raw_datasets['train'][0]['prompt_chosen']}")
+    logger.info(f"Rejected prompt 0 of the raw training set:\n\n{raw_datasets['train'][0]['prompt_rejected']}")
+    logger.info(f"First response of the raw training set:\n\n{raw_datasets['train'][0]['answer']}")
+    assert raw_datasets['train'][0]['prompt_chosen'] != raw_datasets['train'][0]['prompt_rejected'], "Prompt and chosen are the same"
+    
     ##########################
     # Instantiate ORPO trainer
     ##########################

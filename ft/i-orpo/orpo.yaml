@@ -22,14 +22,14 @@ lora_target_modules:
 # Data training arguments
 chat_template: "{% for message in messages %}\n{% if message['role'] == 'user' %}\n{{ '<|user|>\n' + message['content'] + eos_token }}\n{% elif message['role'] == 'system' %}\n{{ '<|system|>\n' + message['content'] + eos_token }}\n{% elif message['role'] == 'assistant' %}\n{{ '<|assistant|>\n'  + message['content'] + eos_token }}\n{% endif %}\n{% if loop.last and add_generation_prompt %}\n{{ '<|assistant|>' }}\n{% endif %}\n{% endfor %}"
 dataset_mixer:
-  chtmp223/suri: 1.0
+  chtmp223/suri: 1.0        #TODO: replace with your own dataset (after retrieving books3 text)
 dataset_splits:
 - train
 preprocessing_num_workers: 48
 
 # ORPOTrainer arguments
 bf16: true
-beta: 0.4             
+beta: 0.4             #beta: 0.05 -- default
 gradient_accumulation_steps: 1
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
@@ -45,9 +45,9 @@ lr_scheduler_type: cosine
 max_length: 15024
 max_completion_length: 15000
 max_prompt_length: 5000
-num_train_epochs: 3
+num_train_epochs: 2
 optim: adamw_torch
-output_dir: ./suri-i-orpo
+output_dir: suri-i-orpo
 per_device_train_batch_size: 1
 push_to_hub: true
 report_to:
@@ -56,4 +56,5 @@ save_strategy: "epoch"
 save_steps: 3
 save_total_limit: 3
 seed: 42
+#warmup_steps: 100
 run_name: suri-i-orpo
