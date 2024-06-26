@@ -73,7 +73,6 @@ p{
   font-size: 16px;
   color: rgb(48, 47, 47);
   margin: 0 0 1em 0;
-  text-align: justify;
   line-height: 21px; 
   font-family: 'Inter', sans-serif;
   font-weight: 500;
@@ -89,21 +88,14 @@ figcaption {
   text-align: center;
 }
 
-li {
-  font-size: 16px;
-}
-
-.bibtex {
+.dropping {
   font-family: 'Menlo', Menlo, monospace;
-  font-size: 12px;
-  padding: 10px;
-  color: #333;
+  font-size: 10px;
   width: 100%; 
-  margin: 10px auto;
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  text-align: justify;
+  text-align: left;
 }
 
 .publication_block{
@@ -124,7 +116,23 @@ li {
   font-family: 'Menlo', Menlo, monospace;
 }
 
-.abstract {
-  max-width: 40em;
-  margin: 2em auto;
+.left-column {
+  width: 40%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+}
+.right-column {
+  width: 60%;
+  padding: 10px;
+}
+.hidden {
+  display: none;
+}
+
+.image-container {
+  display: flex; 
+  padding-top: 10px; 
+  max-width: 50%;
+  gap: 20px;
+  justify-content: center;
 }
