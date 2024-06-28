@@ -5,7 +5,6 @@
 # This script should take 30 minutes to run.
 
 import os
-import concurrent.futures
 import regex as re
 import traceback
 from tqdm import tqdm

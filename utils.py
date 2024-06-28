@@ -1,5 +1,5 @@
 import re
-
+import tiktoken
 
 def check_bib(text):
     """

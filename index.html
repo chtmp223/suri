@@ -58,6 +58,9 @@
       .nord-dark-mode p {
         color: #D8DEE9; 
       }
+      .nord-dark-mode pre {
+        color: #D8DEE9; 
+      }
       .nord-dark-mode b {
         color: #D8DEE9; 
       }
@@ -98,43 +101,46 @@
   </script>
 
 <body>
-  <div style="text-align: center;">
-    <h1>🦙 Suri: Multi-constraint Instruction Following for Long-form Text Generation</h1>
-    <img src="assets/img/dark-mode.png" alt="Toggle Dark Mode" class="dark-mode-toggle responsive-icon" id="darkModeToggle">
+    <div style="text-align: center;">
+        <h1>🦙 Suri: Multi-constraint Instruction Following for Long-form Text Generation</h1>
+        <img src="assets/img/dark-mode.png" alt="Toggle Dark Mode" class="dark-mode-toggle responsive-icon" id="darkModeToggle">
 
-    <script>
-        const toggleButton = document.getElementById('darkModeToggle');
-        toggleButton.addEventListener('click', () => {
-            document.body.classList.toggle('nord-dark-mode');
-        });
-    </script>
-    <a class='link-body' href="https://chtmp223.github.io/" onclick="_blank">Chau Minh Pham</a>, <a class='link-body' href="https://simengsun.github.io" onclick="_blank">Simeng Sun<sup>*</sup></a>, <a class='link-body' href="https://people.cs.umass.edu/~miyyer/" onclick="_blank">Mohit Iyyer</a>
-    <br>
-    University of Massachusetts Amherst<br>
-    *Now at NVIDIA<br>
-    <a class="link-body" href="">[Paper]</a>
-    <a class="link-body" href="https://www.github.com/chtmp223/suri" target="_blank">[Code]</a>
-    <a class="link-body" href="https://huggingface.co/datasets/chtmp223/suri/" target="_blank">[Dataset]</a>
-    <a class="link-body" href="https://huggingface.co/chtmp223/suri-i-orpo" target="_blank">[I-ORPO Model]</a>
-    <a class="link-body" href="https://huggingface.co/chtmp223/suri-sft" target="_blank">[SFT Model]</a>
-  </div>
+        <script>
+            const toggleButton = document.getElementById('darkModeToggle');
+            toggleButton.addEventListener('click', () => {
+                document.body.classList.toggle('nord-dark-mode');
+            });
+        </script>
+        <a class='link-body' href="https://chtmp223.github.io/" onclick="_blank">Chau Minh Pham</a>, <a class='link-body' href="https://simengsun.github.io" onclick="_blank">Simeng Sun<sup>*</sup></a>, <a class='link-body' href="https://people.cs.umass.edu/~miyyer/" onclick="_blank">Mohit Iyyer</a>
+        <br>
+        University of Massachusetts Amherst<br>
+        *Now at NVIDIA<br>
+        <a class="link-body" href="https://arxiv.org/abs/2406.19371" target="_blank">[Paper]</a>
+        <a class="link-body" href="https://www.github.com/chtmp223/suri" target="_blank">[Code]</a>
+        <a class="link-body" href="https://huggingface.co/datasets/chtmp223/suri/" target="_blank">[Dataset]</a>
+        <a class="link-body" href="https://huggingface.co/chtmp223/suri-i-orpo" target="_blank">[I-ORPO Model]</a>
+        <a class="link-body" href="https://huggingface.co/chtmp223/suri-sft" target="_blank">[SFT Model]</a>
+    </div>
   
-  <hr>
+    <hr>
 
-  <div style="text-align: center;">
-    <img class="responsive-header" style="padding-top:10px; height: auto; max-width: 80%;" src="assets/img/suri.png">
-  </div>
+    <div style="text-align: center;">
+        <img class="responsive-header" style="padding-top:10px; height: auto; max-width: 80%;" src="assets/img/suri.png">
+    </div>
 
-  <br>
-  <div class="container" style="text-align: center;">
-    <h2 class="title">TLDR;</h2><br>
-  </div>
-  <div class="container" style="max-width: 70%; margin: 0 auto; text-align: justify;">
-    <div class="row">
-      <ul>
-        <li>We introduce a new dataset, <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a>, which contains multi-constraint instructions (~10 constraints per instruction) and lengthy gold responses (between 2k and 5k words).</li>
-        <li>We propose I-ORPO, a variant of ORPO <a href="https://arxiv.org/abs/2403.07691" onclick="_blank" class="link-body">(Hong et al., 2024)</a> that handles chosen and rejected prompts rather than chosen and rejected responses.</li>
-        <div style="font-size: smaller;">
+    <br>
+    <div class="container" style="text-align: center;">
+        <h2 class="title">TLDR;</h2><br>
+    </div>
+    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: justify;">
+        <div class="row">
+            <p class="tlr">1. We introduce a new dataset, <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a>, which contains multi-constraint instructions (~10 constraints per instruction) and lengthy gold responses (between 2k and 5k words).</p>
+            <p class="tlr">2. We propose I-ORPO, a variant of ORPO <a href="https://arxiv.org/abs/2403.07691" onclick="_blank" class="link-body">(Hong et al., 2024)</a> that handles chosen and rejected prompts rather than chosen and rejected responses.</p>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center" style="max-width: 70%; margin: 0 auto;">
+      <div class="row">
+          <div style="font-size: smaller;">
           $$
           \begin{align}
               \mathcal{L}_{\text{I-ORPO}} = \mathbb{E}_{(x_w, x_l, y)} \left[ \mathcal{L}_{\text{SFT}} + \lambda \cdot \mathcal{L}_{\text{I-OR}} \right]
@@ -148,10 +154,12 @@
           \end{align}
           $$
           </div>
-        <li> We find that fine-tuning Mistral-7B-Instruct with I-ORPO and SFT results in significantly longer generations and decent constraint-following ability. However, <span class="texttt">SURI</span>-I-ORPO generations are generally preferred for their coherent and informative incorporation of the given constraints.</li>
-        <li> We observe that GPT-4o does not reliably evaluate the constraint-following ability of long-form text generations.</li>
-      </ul>
-
+        </div>
+    </div>
+    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: justify;">
+        <div class="row">
+        <p class="tlr">3. We find that fine-tuning Mistral-7B-Instruct with I-ORPO and SFT results in significantly longer generations and decent constraint-following ability. In addition, <span class="texttt">SURI</span>-I-ORPO generations are generally preferred for their coherent and informative incorporation of the given constraints.</p>
+        <p class="tlr">4. We observe that GPT-4o does not reliably evaluate the constraint-following ability of long-form text generations.</p>
     </div>
   </div>
 
@@ -444,17 +452,21 @@ When the 15th century really takes off, people start to become quite wealthy, th
   </div>
 
   <div class="container" style="text-align: left;">
-    If you find this work helpful, please check out our <a href="" onclick="_blank" class="link-body">full paper</a> and cite us as follows:
-    <div style="padding: 20px;margin: 20px auto;background-color: highlight;">
-      <p style="font-size: smaller; font-family: 'Menlo', Menlo, monospace;">
-        citation
-      </p>
-    </div>
+    <p>
+        If you find this work helpful, check out our <a href="https://arxiv.org/abs/2406.19371" target="_blank" class="link-body">full paper</a> and cite us as follows:
+    </p>
+    <div style="border: 1px dashed #09194f; padding: 20px; margin: 20px 20px;">
+        <pre style="font-size: smaller; font-family: 'Menlo', Menlo, monospace; white-space: pre-wrap; ">
+@misc{pham2024surimulticonstraintinstructionfollowing,
+  title={Suri: Multi-constraint Instruction Following for Long-form Text Generation}, 
+  author={Chau Minh Pham and Simeng Sun and Mohit Iyyer},
+  year={2024},
+  eprint={2406.19371},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2406.19371}
+}</pre></div>
   </div>
-
-
-
-  
 
 
   <!-- Optional JavaScript -->

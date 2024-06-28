@@ -25,6 +25,7 @@ torch.cuda.empty_cache()
 import transformers
 from transformers import AutoModelForCausalLM, set_seed
 
+# Import the modified alignment and trl libraries
 sys.path.append("../lib/")
 
 from alignment_mod import (
