@@ -9,22 +9,15 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="icon" href="assets/img/avatartion.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/img/avatartion.png" type="image/x-icon">
     <script>
-      function unhide(id) {
-            var element = document.getElementById(id);
-            var elements = document.querySelectorAll('.right-column > div');
-            elements.forEach(function(el) {
-                if (el !== element) {
-                    el.classList.add('hidden');
-                }
-            });
-            if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
-            } else {
-                element.classList.add('hidden');
-            }
+      function unhide(divID) {
+        var item = document.getElementById(divID);
+        if (item) {
+          item.className = (item.className == 'hidden') ? 'unhidden' : 'hidden';
         }
-
+      }
       function applySystemDefaultMode() {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
           document.body.classList.add("nord-dark-mode");
@@ -33,61 +26,8 @@
 
         window.onload = applySystemDefaultMode;
     </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <title>Chau Minh Pham</title>
-    <style>
-      .nord-dark-mode {
-        background-color: #2E3440;
-        color: #D8DEE9;
-      }
-      .nord-dark-mode a {
-        color: #88C0D0;
-      }
-      .nord-dark-mode a:hover {
-        padding: 0 0 5px; 
-        background-color: #fff48f;
-        color: #00818a;
-      }
-      .nord-dark-mode hr {
-        border-color: #4C566A;
-      }
-      .nord-dark-mode .container {
-        border-color: #4C566A;
-      }
-      .nord-dark-mode p {
-        color: #D8DEE9; 
-      }
-      .nord-dark-mode pre {
-        color: #D8DEE9; 
-      }
-      .nord-dark-mode b {
-        color: #D8DEE9; 
-      }
-      .nord-dark-mode h1 {
-        color: #D8DEE9; 
-      }
-      .title {
-        color: black;
-      }
-      .dark-mode-toggle {
-            position: fixed;
-            top: 0;
-            right: 0;
-            margin: 15px;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 1000;
-            background-color: #00818a;
-            border: 2px solid #D8DEE9;
-            border-radius: 50%; /* Make the button round */
-            width: 45px; /* Adjust width to make the button round */
-            height: 45px; /* Adjust height to make the button round */
-        }
-        .nord-dark-mode .bibtex {
-          color: #D8DEE9;
-        }
-    </style>
+    <title>Suri | Long-form Generation</title>
   </head>
 
   <!-- Google tag (gtag.js) -->
@@ -103,14 +43,6 @@
 <body>
     <div style="text-align: center;">
         <h1>🦙 Suri: Multi-constraint Instruction Following for Long-form Text Generation</h1>
-        <img src="assets/img/dark-mode.png" alt="Toggle Dark Mode" class="dark-mode-toggle responsive-icon" id="darkModeToggle">
-
-        <script>
-            const toggleButton = document.getElementById('darkModeToggle');
-            toggleButton.addEventListener('click', () => {
-                document.body.classList.toggle('nord-dark-mode');
-            });
-        </script>
         <a class='link-body' href="https://chtmp223.github.io/" onclick="_blank">Chau Minh Pham</a>, <a class='link-body' href="https://simengsun.github.io" onclick="_blank">Simeng Sun<sup>*</sup></a>, <a class='link-body' href="https://people.cs.umass.edu/~miyyer/" onclick="_blank">Mohit Iyyer</a>
         <br>
         University of Massachusetts Amherst<br>
@@ -120,6 +52,16 @@
         <a class="link-body" href="https://huggingface.co/datasets/chtmp223/suri/" target="_blank">[Dataset]</a>
         <a class="link-body" href="https://huggingface.co/chtmp223/suri-i-orpo" target="_blank">[I-ORPO Model]</a>
         <a class="link-body" href="https://huggingface.co/chtmp223/suri-sft" target="_blank">[SFT Model]</a>
+        [<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-moon-stars-fill dark-mode-toggle responsive-icon" viewBox="0 0 16 16" id="darkModeToggle">
+          <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/>
+          <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+        </svg>]
+        <script>
+          const toggleButton = document.getElementById('darkModeToggle');
+          toggleButton.addEventListener('click', () => {
+              document.body.classList.toggle('nord-dark-mode');
+          });
+      </script>
     </div>
   
     <hr>
@@ -168,6 +110,12 @@
   <div class="container" style="text-align: center;">
     <h2 class="title"><span class="texttt">Suri</span> Dataset</h2><br>
         <p> Access the full dataset here: <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a></p>
+        <iframe
+          src="https://huggingface.co/datasets/chtmp223/suri/embed/viewer/default/train"
+          frameborder="0"
+          width="100%"
+          height="560px"
+        ></iframe><hr>
         Click on the links below to view responses to the sample instruction:<br>
         <a href="javascript:unhide('drop1');" class="link-body">[Gold Response]</a>
         <a href="javascript:unhide('drop2');" class="link-body">[Mistral-7b-Instruct]</a>

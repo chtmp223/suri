@@ -136,3 +136,43 @@ figcaption {
   gap: 20px;
   justify-content: center;
 }
+
+.nord-dark-mode {
+  background-color: #2E3440;
+  color: #D8DEE9;
+}
+.nord-dark-mode a {
+  color: #88C0D0;
+}
+.nord-dark-mode a:hover {
+  padding: 0 0 5px; 
+  background-color: #fff48f;
+  color: #00818a;
+}
+.nord-dark-mode hr {
+  border-color: #4C566A;
+}
+.nord-dark-mode .container {
+  border-color: #4C566A;
+}
+.nord-dark-mode p {
+  color: #D8DEE9; 
+}
+.nord-dark-mode b {
+  color: #D8DEE9; 
+}
+.nord-dark-mode h1 {
+  color: #D8DEE9; 
+}
+.title {
+  color: black;
+}
+.dark-mode-toggle {
+      position: static;
+      cursor: pointer;
+      width: 16px; 
+      height: 16px; 
+}
+.nord-dark-mode .bibtex {
+  color: #D8DEE9;
+}
