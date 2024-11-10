@@ -176,3 +176,34 @@ figcaption {
 .nord-dark-mode .bibtex {
   color: #D8DEE9;
 }
+
+
+code {
+  font-family: 'Menlo', Menlo, monospace;
+  font-size: 14px;
+  background-color: #f7f7f7;
+  padding: 5px;
+  border-radius: 5px;
+  color: #d63333;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.code-block {
+  overflow-x: auto;
+  padding: 1em;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+}
+
+pre {
+  overflow-x: auto;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  font-family: 'Menlo', monospace;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}

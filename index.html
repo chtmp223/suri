@@ -26,6 +26,14 @@
 
         window.onload = applySystemDefaultMode;
     </script>
+    <style>
+      .nord-dark-mode .bib {
+        color: white;
+      }
+      .reference-div {
+        border: 1px dashed whitesmoke;
+      }
+    </style>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <title>Suri | Long-form Generation</title>
   </head>
@@ -109,14 +117,14 @@
 
   <div class="container" style="text-align: center;">
     <h2 class="title"><span class="texttt">Suri</span> Dataset</h2><br>
-        <p> Access the full dataset here: <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a></p>
+        <p> Access the full dataset here: <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a>. To also access the Books3 subset, please refer to our Github repository for detailed instructions.</p>
         <iframe
           src="https://huggingface.co/datasets/chtmp223/suri/embed/viewer/default/train"
           frameborder="0"
           width="100%"
           height="560px"
         ></iframe><hr>
-        Click on the links below to view responses to the sample instruction:<br>
+        Click on the links below to view responses to the sample instruction. Note that you need to click on each button to hide the text.<br>
         <a href="javascript:unhide('drop1');" class="link-body">[Gold Response]</a>
         <a href="javascript:unhide('drop2');" class="link-body">[Mistral-7b-Instruct]</a>
         <a href="javascript:unhide('drop3');" class="link-body">[I-ORPO]</a>
@@ -399,22 +407,29 @@ When the 15th century really takes off, people start to become quite wealthy, th
     <h2 class="title">Citation</h2><br>
   </div>
 
-  <div class="container" style="text-align: left;">
-    <p>
-        If you find this work helpful, check out our <a href="https://arxiv.org/abs/2406.19371" target="_blank" class="link-body">full paper</a> and cite us as follows:
-    </p>
-    <div style="border: 1px dashed #09194f; padding: 20px; margin: 20px 20px;">
-        <pre style="font-size: smaller; font-family: 'Menlo', Menlo, monospace; white-space: pre-wrap; ">
-@misc{pham2024surimulticonstraintinstructionfollowing,
-  title={Suri: Multi-constraint Instruction Following for Long-form Text Generation}, 
-  author={Chau Minh Pham and Simeng Sun and Mohit Iyyer},
-  year={2024},
-  eprint={2406.19371},
-  archivePrefix={arXiv},
-  primaryClass={cs.CL},
-  url={https://arxiv.org/abs/2406.19371}
-}</pre></div>
-  </div>
+  <div
+      class="reference-div"
+      style="border: 1px dashed; padding: 20px; margin: 20px 20px"
+    >
+      <pre
+        style="
+          font-size: smaller;
+          font-family: &quot;Menlo&quot;, Menlo, monospace;
+          white-space: pre-wrap;
+          text-align: left;
+        "
+        class="bib"
+      >
+      @misc{pham2024topicgptpromptbasedtopicmodeling,
+        title={TopicGPT: A Prompt-based Topic Modeling Framework}, 
+        author={Chau Minh Pham and Alexander Hoyle and Simeng Sun and Philip Resnik and Mohit Iyyer},
+        year={2024},
+        eprint={2311.01449},
+        archivePrefix={arXiv},
+        primaryClass={cs.CL},
+        url={https://arxiv.org/abs/2311.01449}, 
+      }</pre>
+    </div>
 
 
   <!-- Optional JavaScript -->
