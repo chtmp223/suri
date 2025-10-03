@@ -13,10 +13,13 @@
     <link rel="shortcut icon" href="assets/img/avatartion.png" type="image/x-icon">
     <script>
       function unhide(divID) {
-        var item = document.getElementById(divID);
-        if (item) {
-          item.className = (item.className == 'hidden') ? 'unhidden' : 'hidden';
-        }
+        var ids = ['drop1','drop2','drop3','drop4'];
+        ids.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.className = (id === divID) ? 'unhidden' : 'hidden';
+          }
+        });
       }
       function applySystemDefaultMode() {
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -32,6 +35,9 @@
       }
       .reference-div {
         border: 1px dashed whitesmoke;
+      }
+      .tlr {
+        text-align: left;
       }
     </style>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -82,7 +88,7 @@
     <div class="container" style="text-align: center;">
         <h2 class="title">TLDR;</h2><br>
     </div>
-    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: justify;">
+    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: left;">
         <div class="row">
             <p class="tlr">1. We introduce a new dataset, <a href="https://huggingface.co/datasets/chtmp223/suri/" class="link-body" target="_blank">Suri</a>, which contains multi-constraint instructions (~10 constraints per instruction) and lengthy gold responses (between 2k and 5k words).</p>
             <p class="tlr">2. We propose I-ORPO, a variant of ORPO <a href="https://arxiv.org/abs/2403.07691" onclick="_blank" class="link-body">(Hong et al., 2024)</a> that handles chosen and rejected prompts rather than chosen and rejected responses.</p>
@@ -106,7 +112,7 @@
           </div>
         </div>
     </div>
-    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: justify;">
+    <div class="container" style="max-width: 70%; margin: 0 auto; text-align: left;">
         <div class="row">
         <p class="tlr">3. We find that fine-tuning Mistral-7B-Instruct with I-ORPO and SFT results in significantly longer generations and decent constraint-following ability. In addition, <span class="texttt">SURI</span>-I-ORPO generations are generally preferred for their coherent and informative incorporation of the given constraints.</p>
         <p class="tlr">4. We observe that GPT-4o does not reliably evaluate the constraint-following ability of long-form text generations.</p>
@@ -124,7 +130,7 @@
           width="100%"
           height="560px"
         ></iframe><hr>
-        Click on the links below to view responses to the sample instruction. Note that you need to click on each button to hide the text.<br>
+        Click the buttons below to switch between responses to the sample instruction.<br>
         <a href="javascript:unhide('drop1');" class="link-body">[Gold Response]</a>
         <a href="javascript:unhide('drop2');" class="link-body">[Mistral-7b-Instruct]</a>
         <a href="javascript:unhide('drop3');" class="link-body">[I-ORPO]</a>
@@ -149,7 +155,7 @@
 - Throughout the lecture, maintain an engaging and informative tone, incorporating anecdotes and specific details to illustrate points, and encourage listeners to explore these architectural examples firsthand.</p>
     </div>
     <div class="right-column" style="height: 500px; overflow-y: auto;">
-        <div id="drop1">
+        <div id="drop1" class="unhidden">
             <p>Gold Response</p>
             <p class="dropping">How the Middle Ages were Built: Coming of Age, 1408-1530
 In my last lecture we took a look at a century that was dominated by economic crisis and demographic collapse. I described how out of this turmoil came a distinctive architectural style often described as the perpendicular style. In doing so we mainly concentrated on polite architecture, on castles, churches and palaces. I want to start tonight by righting that balance as we have not heard, for a while, about where more ordinary people lived.
